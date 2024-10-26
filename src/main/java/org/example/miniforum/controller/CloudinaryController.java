@@ -1,5 +1,7 @@
 package org.example.miniforum.controller;
 
+import lombok.extern.slf4j.Slf4j;
+import org.example.miniforum.dto.ApiResponse;
 import org.example.miniforum.service.CloudinaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,17 +16,23 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/images")
+@Slf4j
 public class CloudinaryController {
     @Autowired
     private CloudinaryService cloudinaryService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(@RequestParam("image") MultipartFile file) {
+    public ApiResponse<String> uploadImage(@RequestParam("image") MultipartFile file) {
+        ApiResponse<String> response;
         try {
-            String imageUrl = cloudinaryService.uploadImage(file);
-            return ResponseEntity.ok(imageUrl);  // Trả về URL ảnh đã upload
+            response = ApiResponse.<String>builder()
+                    .data(cloudinaryService.uploadImage(file))
+                    .message("upload image successful")
+                    .build();
+            log.info("json format: {}", response.getData());
+            return response;  // Trả về URL ảnh đã upload
         } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
+            return ApiResponse.<String>builder().message("upload failed").build();
         }
     }
 }

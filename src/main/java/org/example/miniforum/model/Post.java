@@ -6,12 +6,15 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "post")
 @Getter
-@Setter
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -25,26 +28,30 @@ public class Post {
     private String title;
 
     @Column
-    private String description;
+    private String content;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column
-    private String imageUrl;
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Image> images;
 
     @Column
-    private String Adress;
+    private String location;
 
     @Column
     private Long price;
 
     @Column
-    private Long votes;
+    private Long votes = 0L;
 
     @Column
-    private Long comments;
+    private Long comments = 0L;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Comment> comment = new HashSet<>();
+
 
     @ManyToMany()
     @JoinTable(
@@ -58,4 +65,21 @@ public class Post {
     @CreationTimestamp
     @Column(name = "create_date", updatable = false)
     private LocalDateTime createDate;
+
+    public void setComment(Comment comment) {
+        this.comment.add(comment);
+        this.comments++;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
+        for (Image image : images) {
+            image.setPost(this); // Đảm bảo mỗi ảnh biết bài Post chứa nó
+        }
+    }
+
+    public void addVote(){
+        this.votes++;
+    }
+
 }
