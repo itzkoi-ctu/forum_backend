@@ -14,7 +14,7 @@ import java.util.Set;
 @Entity
 @Table(name = "post")
 @Getter
-
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

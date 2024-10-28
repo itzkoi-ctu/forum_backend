@@ -38,6 +38,8 @@ public class PostService {
     public Post createPost(PostRequest postRequest) {
         Post post = new Post();
         post = postMapper.toPost(postRequest);
+        post.setComments(0L);
+        post.setVotes(0L);
 
         List<Image> imageEntities = new ArrayList<>();
         for(MultipartFile imageFile  : postRequest.getImages()) {
