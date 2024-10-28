@@ -2,7 +2,9 @@ package org.example.miniforum.dto.response;
 
 import lombok.*;
 import org.example.miniforum.model.Image;
+import org.example.miniforum.model.User;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -10,6 +12,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class PostResponse {
     private int id;
 
@@ -17,7 +20,7 @@ public class PostResponse {
 
     private String content;
 
-    private String authorName;
+    private UserResponse user;
 
     private List<ImageResponse> images;
 
@@ -30,4 +33,6 @@ public class PostResponse {
     private Long comments;
 
     private List<CommentResponse> comment;
+
+    private LocalDateTime createDate;
 }

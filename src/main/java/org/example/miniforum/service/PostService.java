@@ -74,12 +74,24 @@ public class PostService {
 
 
     public PostResponse getPostById(int id) {
-        return postMapper.toPostResponse(postRepository.findById(id).get());
+        PostResponse postResponse = postMapper.toPostResponse(postRepository.findById(id).get());
+        log.info("=======> post data: {}",postResponse.toString());
+        return postResponse;
     }
 
     public void likePost(int postId) {
         Post post = postRepository.findById(postId).get();
         post.addVote();
         postRepository.save(post);
+    }
+
+    public List<PostResponse> getPostsByUserId(int userId) {
+        List<Post> posts = postRepository.findByUserId(userId);
+        List<PostResponse> responses = new ArrayList<>();
+        for (Post post : posts) {
+            PostResponse postResponse = postMapper.toPostResponse(post);
+            responses.add(postResponse);
+        }
+        return responses;
     }
 }

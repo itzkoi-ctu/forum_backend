@@ -30,7 +30,7 @@ public class Post {
     @Column
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -49,7 +49,7 @@ public class Post {
     @Column
     private Long comments = 0L;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Comment> comment = new HashSet<>();
 
 

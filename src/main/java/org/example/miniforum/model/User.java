@@ -1,5 +1,6 @@
 package org.example.miniforum.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,8 +29,12 @@ public class User {
     private String accountName;
 
     @Column
+    private String avartarImgUrl;
+
+    @Column
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Post> posts;
 

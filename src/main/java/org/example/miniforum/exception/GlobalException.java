@@ -28,4 +28,11 @@ public class GlobalException {
 
         return ResponseEntity.badRequest().body(apiResponse);
     }
+
+    @ExceptionHandler(value = AppException.class)
+    ResponseEntity<ApiResponse> handlingAppException(RuntimeException e) {
+        ApiResponse apiResponse = new ApiResponse();
+        apiResponse.setMessage(e.getMessage());
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
 }

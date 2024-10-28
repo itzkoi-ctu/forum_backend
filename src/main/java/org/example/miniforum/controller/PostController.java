@@ -8,6 +8,7 @@ import org.example.miniforum.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -45,18 +46,33 @@ public class PostController {
         return response;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/create")
     public ResponseEntity<Post> createPost(@ModelAttribute PostRequest postRequest) {
         Post createdPost = postService.createPost(postRequest);
         return ResponseEntity.ok(createdPost);
     }
 
+
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/like/{postId}")
     public ApiResponse likePost(@PathVariable int postId) {
         ApiResponse apiResponse = new ApiResponse();
         postService.likePost(postId);
         apiResponse.setMessage("like success");
         return apiResponse;
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/getByUser/{userId}")
+    public ApiResponse<List<PostResponse>> getPostByUser(@PathVariable int userId) {
+        ApiResponse<List<PostResponse>> response =
+                ApiResponse.<List<PostResponse>>builder()
+                        .data(postService.getPostsByUserId(userId))
+                        .message("getPostsByUser success")
+                        .build();
+
+        return response;
     }
 
 }
