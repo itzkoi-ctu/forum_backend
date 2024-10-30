@@ -7,8 +7,10 @@ import org.example.miniforum.dto.response.PostResponse;
 import org.example.miniforum.mapper.CategoryMapper;
 import org.example.miniforum.mapper.ImageMapper;
 import org.example.miniforum.mapper.PostMapper;
+import org.example.miniforum.model.Category;
 import org.example.miniforum.model.Image;
 import org.example.miniforum.model.Post;
+import org.example.miniforum.repository.CategoryRepository;
 import org.example.miniforum.repository.ImageRepository;
 import org.example.miniforum.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Slf4j
@@ -36,30 +40,58 @@ public class PostService {
     private CategoryMapper categoryMapper;
 
     @Autowired
+    private CategoryRepository CategoryRepository;;
+
+    @Autowired
     private CloudinaryService cloudinaryService;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Transactional
     public Post createPost(PostRequest postRequest) {
-        Post post = new Post();
-        post = postMapper.toPost(postRequest);
+        log.info("After Post");
+        Post post = post = postMapper.toPost(postRequest);
+        log.info("Create Post");
+
+
         post.setComments(0L);
         post.setVotes(0L);
 
         List<Image> imageEntities = new ArrayList<>();
-        for(MultipartFile imageFile  : postRequest.getImages()) {
-            try{
-                String imageUrl = cloudinaryService.uploadImage(imageFile);
-                Image image = new Image();
-                image.setImageUrl(imageUrl);
-                image.setPost(post);
-                imageEntities.add(image);
-            }catch(IOException e){
-                log.error("====> image service error: {}",e.getMessage());
+        //log.info("images: {} " + postRequest.getImages().size());
+        //log.info("category: {} " + postRequest.getCategories().size());
+
+        //handle categories
+        if(postRequest.getCategories() != null) {
+            Set<Category> categories = new HashSet<>();
+
+            for(Category category : postRequest.getCategories()) {
+                categoryRepository.findById(category.getId()).
+                        ifPresent(categories::add);
+                //System.out.println("categories: " + categories.size() + " cate: " + category.getId());
+            }
+            post.setCategories(categories);
+        }
+
+            if(postRequest.getImages() != null && !postRequest.getImages().isEmpty()) {
+                for (MultipartFile imageFile : postRequest.getImages()) {
+                    try {
+                        String imageUrl = cloudinaryService.uploadImage(imageFile);
+                        Image image = new Image();
+                        image.setImageUrl(imageUrl);
+                        image.setPost(post);
+                        imageEntities.add(image);
+                    } catch (IOException e) {
+                        log.error("====> image service error: {}", e.getMessage());
+                    }
+
+                }
+                // image list auto save to image table
+                post.setImages(imageEntities);
             }
 
-        }
-        // image list auto save to image table
-        post.setImages(imageEntities);
+
+
         return postRepository.save(post);
     }
 

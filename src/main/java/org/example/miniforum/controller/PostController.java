@@ -3,6 +3,7 @@ package org.example.miniforum.controller;
 import org.example.miniforum.dto.ApiResponse;
 import org.example.miniforum.dto.request.PostRequest;
 import org.example.miniforum.dto.response.PostResponse;
+import org.example.miniforum.mapper.PostMapper;
 import org.example.miniforum.model.Post;
 import org.example.miniforum.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,9 @@ public class PostController {
 
     @Autowired
     PostService postService;
+
+    @Autowired
+    PostMapper postMapper;
 
     @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/posts")
@@ -48,9 +52,9 @@ public class PostController {
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/create")
-    public ResponseEntity<Post> createPost(@ModelAttribute PostRequest postRequest) {
+    public ResponseEntity<PostResponse> createPost(@ModelAttribute PostRequest postRequest) {
         Post createdPost = postService.createPost(postRequest);
-        return ResponseEntity.ok(createdPost);
+        return ResponseEntity.ok(postMapper.toPostResponse(createdPost));
     }
 
 
