@@ -6,6 +6,7 @@ import org.example.miniforum.model.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -35,4 +36,6 @@ public class PostResponse {
     private List<CommentResponse> comment;
 
     private LocalDateTime createDate;
+
+    private Set<CategoryResponse> categories;
 }

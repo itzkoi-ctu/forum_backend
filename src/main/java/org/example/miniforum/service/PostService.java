@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.example.miniforum.dto.request.PostRequest;
 import org.example.miniforum.dto.response.PostResponse;
+import org.example.miniforum.mapper.CategoryMapper;
 import org.example.miniforum.mapper.ImageMapper;
 import org.example.miniforum.mapper.PostMapper;
 import org.example.miniforum.model.Image;
@@ -30,6 +31,9 @@ public class PostService {
 
     @Autowired
     private ImageMapper imageMapper;
+
+    @Autowired
+    private CategoryMapper categoryMapper;
 
     @Autowired
     private CloudinaryService cloudinaryService;
@@ -84,6 +88,7 @@ public class PostService {
     public void likePost(int postId) {
         Post post = postRepository.findById(postId).get();
         post.addVote();
+        System.out.println("like post " + postId + "votes: " + post.getVotes());
         postRepository.save(post);
     }
 
