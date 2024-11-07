@@ -66,4 +66,8 @@ public class UserService {
         log.info("user email: {}", user.getEmail());
         return userMapper.toUserResponse(userRepository.save(user));
     }
+
+    public UserResponse getById(int id) {
+        return userMapper.toUserResponse(userRepository.findById(id).orElseThrow());
+    }
 }

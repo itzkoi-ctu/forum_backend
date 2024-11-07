@@ -10,9 +10,11 @@ import org.example.miniforum.mapper.PostMapper;
 import org.example.miniforum.model.Category;
 import org.example.miniforum.model.Image;
 import org.example.miniforum.model.Post;
+import org.example.miniforum.model.User;
 import org.example.miniforum.repository.CategoryRepository;
 import org.example.miniforum.repository.ImageRepository;
 import org.example.miniforum.repository.PostRepository;
+import org.example.miniforum.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -46,6 +48,8 @@ public class PostService {
     private CloudinaryService cloudinaryService;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Transactional
     public Post createPost(PostRequest postRequest) {
@@ -86,10 +90,14 @@ public class PostService {
                     }
 
                 }
+
                 // image list auto save to image table
                 post.setImages(imageEntities);
             }
 
+        //set userId(author)
+        userRepository.findById(postRequest.getUserId()).ifPresent(post::setUser);
+        log.info("set user {}", postRequest.getUserId());
 
 
         return postRepository.save(post);

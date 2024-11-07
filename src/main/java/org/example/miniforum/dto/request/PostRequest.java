@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class PostRequest {
+    private int userId;
     private String title;
     private String content;
     private String location;

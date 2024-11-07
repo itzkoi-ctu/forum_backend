@@ -1,5 +1,6 @@
 package org.example.miniforum.controller;
 
+import com.cloudinary.Api;
 import org.example.miniforum.dto.ApiResponse;
 import org.example.miniforum.dto.request.UserLogin;
 import org.example.miniforum.dto.request.UserRequest;
@@ -47,6 +48,15 @@ public class UserController {
                         .data(userService.setAvt(avtImg,userId, accountName, email, phone))
                         .message("set success")
                         .build();
+        return response;
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<UserResponse> get(@PathVariable int id) {
+        ApiResponse<UserResponse> response = ApiResponse.<UserResponse>builder()
+                .data(userService.getById(id))
+                .message("get success")
+                .build();
         return response;
     }
 }

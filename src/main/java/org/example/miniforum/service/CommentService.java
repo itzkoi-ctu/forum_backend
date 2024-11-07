@@ -36,7 +36,7 @@ public class CommentService {
         postRepository.save(post);
 
         System.out.println("comment of post: " + post.getComment());
-        return commentRepository.save(comment);
+        return comment;
 
     }
 }

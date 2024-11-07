@@ -2,6 +2,7 @@ package org.example.miniforum.dto.response;
 
 import jakarta.persistence.Column;
 import lombok.*;
+import org.example.miniforum.model.User;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 public class CommentResponse {
     private int id;
     private String content;
-    private String username;
+    private User user;
     private LocalDateTime createDate;
 
 }
