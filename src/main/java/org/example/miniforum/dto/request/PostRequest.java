@@ -21,4 +21,6 @@ public class PostRequest {
     private Long price;
     private List<MultipartFile> images;
     private List<Category> categories;
+
 }
+

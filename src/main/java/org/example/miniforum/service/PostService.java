@@ -77,6 +77,7 @@ public class PostService {
             post.setCategories(categories);
         }
 
+
             if(postRequest.getImages() != null && !postRequest.getImages().isEmpty()) {
                 for (MultipartFile imageFile : postRequest.getImages()) {
                     try {
@@ -94,6 +95,7 @@ public class PostService {
                 // image list auto save to image table
                 post.setImages(imageEntities);
             }
+
 
         //set userId(author)
         userRepository.findById(postRequest.getUserId()).ifPresent(post::setUser);

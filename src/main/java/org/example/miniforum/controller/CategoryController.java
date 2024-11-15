@@ -20,6 +20,7 @@ public class CategoryController {
     @GetMapping("/")
     public ApiResponse<List<CategoryResponse>> getAllCategories() {
         ApiResponse<List<CategoryResponse>> response =
+
                             ApiResponse.<List<CategoryResponse>>builder()
                                     .data(categoryService.findAll())
                                     .message("get categories success")
@@ -28,3 +29,4 @@ public class CategoryController {
     }
 
 }
+

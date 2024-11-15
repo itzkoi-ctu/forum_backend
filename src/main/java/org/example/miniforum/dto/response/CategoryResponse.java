@@ -13,4 +13,6 @@ public class CategoryResponse {
     private int id;
 
     private String name;
+
 }
+
