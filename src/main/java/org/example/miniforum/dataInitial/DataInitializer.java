@@ -126,9 +126,6 @@ public class DataInitializer implements CommandLineRunner {
 //        Post post1 = postRepository.findById(post.getId()).get();
 //        post1.setComment(comment);
 //        postRepository.save(post1);
-        AuthenticationRequest request = AuthenticationRequest.builder()
-                .username("luc tran")
-                .password("123456")
-                .build();
+
     }
 }
