@@ -1,24 +1,15 @@
-FROM eclipse-temurin:17-jdk-alpine
+# 1. Chọn base image, sử dụng OpenJDK 20 làm nền tảng
+FROM openjdk:21-jdk-slim
+
+# 2. Thiết lập thư mục làm việc trong container (tùy chọn)
 WORKDIR /app
 
-# Sao chép các file Maven Wrapper
-COPY .mvn/ .mvn
-COPY mvnw pom.xml ./
+# 3. Copy file JAR từ thư mục 'target' trong dự án vào container
+# (sau khi bạn đã build ứng dụng với Maven hoặc Gradle)
+COPY target/*.jar /app/app.jar
 
-# Cấp quyền thực thi cho mvnw
-RUN chmod +x mvnw
-
-# Tải trước các dependency
-RUN ./mvnw dependency:go-offline
-
-# Sao chép mã nguồn ứng dụng
-COPY src ./src
-
-# Build ứng dụng và bỏ qua test
-RUN ./mvnw package -DskipTests
-
-# Chạy ứng dụng
-ENTRYPOINT ["java", "-jar", "/app/target/mini-forum-0.0.1-SNAPSHOT.jar"]
-
-# Expose cổng 8386
+# 4. Cấu hình để container lắng nghe trên cổng 8080 (hoặc cổng mà Spring Boot sử dụng)
 EXPOSE 8386
+
+# 5. Chạy ứng dụng Spring Boot từ file JAR
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
