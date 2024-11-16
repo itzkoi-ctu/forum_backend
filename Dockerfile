@@ -1,15 +1,22 @@
-# 1. Chọn base image, sử dụng OpenJDK 20 làm nền tảng
+# 1. Chọn base image Maven để build ứng dụng
+FROM maven:3.9.4-eclipse-temurin-21 AS builder
+
+# 2. Copy toàn bộ mã nguồn vào container
+WORKDIR /app
+COPY . .
+
+# 3. Build ứng dụng bằng Maven
+RUN mvn clean package -DskipTests
+
+# 4. Dùng image OpenJDK để chạy ứng dụng
 FROM openjdk:21-jdk-slim
 
-# 2. Thiết lập thư mục làm việc trong container (tùy chọn)
+# 5. Copy file JAR từ image builder vào image chạy
 WORKDIR /app
+COPY --from=builder /app/target/mini-forum-0.0.1-SNAPSHOT.jar /app/app.jar
 
-# 3. Copy file JAR từ thư mục 'target' trong dự án vào container
-# (sau khi bạn đã build ứng dụng với Maven hoặc Gradle)
-COPY target/mini-forum-0.0.1-SNAPSHOT.jar /app/app.jar
-
-# 4. Cấu hình để container lắng nghe trên cổng 8080 (hoặc cổng mà Spring Boot sử dụng)
+# 6. Expose cổng ứng dụng
 EXPOSE 8386
 
-# 5. Chạy ứng dụng Spring Boot từ file JAR
+# 7. Chạy ứng dụng
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
