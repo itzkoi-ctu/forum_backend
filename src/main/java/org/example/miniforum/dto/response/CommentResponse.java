@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class CommentResponse {
     private int id;
     private String content;
-    private User user;
+    private UserResponse user;
     private LocalDateTime createDate;
 
 }
