@@ -5,12 +5,12 @@ import org.example.miniforum.dto.request.CommentRequest;
 import org.example.miniforum.dto.response.CommentResponse;
 import org.example.miniforum.mapper.CommentMapper;
 import org.example.miniforum.model.Comment;
+import org.example.miniforum.repository.CommentRepository;
 import org.example.miniforum.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
@@ -18,7 +18,8 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
-
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private CommentMapper commentMapper;
 
@@ -30,5 +31,9 @@ public class CommentController {
 
 
         return response;
+    }
+    @GetMapping("/comments")
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
     }
 }
