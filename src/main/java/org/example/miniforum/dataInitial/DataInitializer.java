@@ -62,6 +62,8 @@ public class DataInitializer implements CommandLineRunner {
         ct4.setName("Dụng cụ, thiết bị");
         Category ct5 = new Category();
         ct5.setName("Thời trang");
+        Category ct6 = new Category();
+        ct6.setName("Khác");
 
         List<Category> cts = new ArrayList<>();
         cts.add(ct1);
@@ -69,6 +71,7 @@ public class DataInitializer implements CommandLineRunner {
         cts.add(ct3);
         cts.add(ct4);
         cts.add(ct5);
+        cts.add(ct6);
         categoryRepository.saveAll(cts);
 
         Set<Category> categories = new HashSet<>();
@@ -98,9 +101,195 @@ public class DataInitializer implements CommandLineRunner {
                 .categories(cgr)
                 .build();
 
+        Post post3 = Post.builder()
+                .title("Tìm gia sư dạy Toán lớp 9")
+                .content("Cần tìm gia sư dạy kèm Toán lớp 9 tại nhà cho bé 14 tuổi. Yêu cầu: gia sư có kinh nghiệm, giờ dạy từ 19h-21h các ngày trong tuần. Lương 120k/giờ.")
+                .price(120000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
 
+        Post post4 = Post.builder()
+                .title("Cần người trông trẻ buổi tối")
+                .content("Cần người trông trẻ tại nhà vào buổi tối cho bé 20 tháng tuổi. Yêu cầu: nữ, tuổi từ 18-25, có kinh nghiệm. Lương 100k/giờ.")
+                .price(100000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+        Post post5 = Post.builder()
+                .title("Tìm gia sư tiếng Anh giao tiếp")
+                .content("Cần tìm gia sư dạy tiếng Anh giao tiếp tại nhà cho người lớn. Yêu cầu: phát âm chuẩn, linh hoạt thời gian dạy. Mức lương 150k/giờ.")
+                .price(150000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+        Post post6 = Post.builder()
+                .title("Tìm gia sư dạy Piano")
+                .content("Cần gia sư dạy đàn piano cơ bản cho trẻ 10 tuổi. Lịch học cuối tuần, thời gian linh hoạt. Lương 200k/giờ.")
+                .price(200000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+        Post post7 = Post.builder()
+                .title("Cần tìm người hỗ trợ làm bài tập lập trình")
+                .content("Cần hỗ trợ làm bài tập Java cơ bản. Học viên cần hướng dẫn qua Zoom hoặc tại nhà. Lương 250k/bài.")
+                .price(250000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+        Post post8 = Post.builder()
+                .title("Cần gia sư kèm môn Hóa lớp 8")
+                .content("Tìm gia sư dạy kèm Hóa học lớp 8 cho học sinh yếu môn Hóa. Dạy tại nhà, ưu tiên giáo viên có kinh nghiệm sư phạm. Lương 180k/giờ.")
+                .price(180000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+        Post post9 = Post.builder()
+                .title("Tìm đối tác trao đổi sách cũ")
+                .content("Tôi cần trao đổi sách cũ (tiểu thuyết, sách học thuật) tại khu vực quận 5. Ai có nhu cầu vui lòng liên hệ để trao đổi thêm.")
+                .price(0L) // Miễn phí
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+        Post post10 = Post.builder()
+                .title("Bán xe đạp cũ giá rẻ")
+                .content("Bán xe đạp cũ 90% mới, phù hợp cho học sinh, sinh viên. Giá chỉ 800k, liên hệ trực tiếp để xem xe tại quận 7.")
+                .price(800000L)
+                .votes(0L)
+                .comments(0L)
+                .user(user)
+                .categories(cgr)
+                .build();
+
+
+        List<Post> pl = new ArrayList<>();
+        pl.add(post4);
+        pl.add(post5);
+
+        pl.add(post6);
+
+        pl.add(post7);
+
+        pl.add(post8);
+        pl.add(post9);
+        pl.add(post10);
+
+
+
+
+        postRepository.saveAll(pl);
+        postRepository.save(post3);
         postRepository.save(post2);
 
+
+//        Post post3 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post3);
+//        Post post4 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post4);
+//        Post post5 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post5);
+//        Post post6 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post6);
+//        Post post7 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post7);
+//        Post post8 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post8);
+//        Post post9 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post9);
+//        Post post10 = Post.builder()
+//                .title("tìm gia sư")
+//                .content("cần tìm gia sư hoặc người trông trẻ cho bé 240 tháng tuổi vào ban đêm, yêu cầu nữ 16 đến 25t, cao trên 1m55 nặng dưới 60kg, ưu tiên ngoại hình" +
+//                        "lương thử việc 100k/h")
+//                .price(450000L)
+//                .votes(0L)
+//                .comments(0L)
+//                .user(user)
+//                .categories(cgr)
+//                .build();
+//        postRepository.save(post10);
         for(Image img : images) {
             img.setPost(post);
         }
